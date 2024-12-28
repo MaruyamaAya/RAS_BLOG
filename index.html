@@ -209,7 +209,7 @@
 
   <div class="container is-max-desktop">
     <video class="video" autoplay controls muted loop playsinline>
-      <source src="./static/videos/compare.mp4" type="video/mp4">
+      <source src="./static/videos/RAS_1080.mp4" type="video/mp4">
     </video>
     <div class="columns is-centered">
       <div class="content has-text-centered">
@@ -257,6 +257,11 @@
           <div class="content has-text-justified">
           We also introduced techniques like starvation prevention, dynamic sampling ratio, accumulated error resetting, key & value recovery, and kernel fusing to further improve the performance of our method. Please refer to our paper for more details.
           </div>
+          <div class="content has-text-centered">
+            <img src="./static/images/dropcnt.png" style="width: 90%;"><br>
+            <span style="font-size: 0.8em; width: 75%; display: inline-block;">Figure 3: Visualization of the number of active sampling steps for the regions with RAS. Fast-update regions have more active steps than slow-update regions.</span>
+              
+          </div>
         </div>
 
         
@@ -272,14 +277,14 @@
         <h2 class="title is-3">Evaluations</h2>
         <div class="content has-text-centered">
           <img src="./static/images/showcase.png">
-          <span style="font-size: 0.8em; width: 75%; display: inline-block;">Figure 3: (a)(b) Accelerating Lumina-Next-T2I and Stable Diffusion 3, with 30 and 28 steps separately. (c)(d) Multiple configurations of RAS outperform rectified flow in both image qualities and text-following. RAS-X stands for RAS with X sampling steps in total. (e) RAS achieves comparable human-evaluation results with the default model configuration while achieving around 1.6x speedup.
+          <span style="font-size: 0.8em; width: 75%; display: inline-block;">Figure 4: (a)(b) Accelerating Lumina-Next-T2I and Stable Diffusion 3, with 30 and 28 steps separately. (c)(d) Multiple configurations of RAS outperform rectified flow in both image qualities and text-following. RAS-X stands for RAS with X sampling steps in total. (e) RAS achieves comparable human-evaluation results with the default model configuration while achieving around 1.6x speedup.
             </span>
         </div>
         <h2 class="title is-4">Qualitative Results</h2>
         
         <div class="content has-text-justified">
           <p>
-            To further evaluate the qualitative performance of <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b>, we conducted a human evaluation. We randomly selected 14 prompts from the official research papers and blogs of Stable Diffusion 3 and Lumina, generating two images for each prompt: one using dense inference and the other using <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b>, both with the same random seed and default number of timesteps. As shown in Figure 3 (e), 633 out of 1400 votes (45.21%) indicated that the two images were of similar quality. Additionally, 28.29% of votes favored the dense image over the <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> result, while 26.50% preferred <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> over the dense result. These results demonstrate that <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> achieves a significant improvement in throughput (1.625× for Stable Diffusion 3 and 1.561× for Lumina-Next-T2I) without noticeably affecting human preference.
+            To further evaluate the qualitative performance of <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b>, we conducted a human evaluation. We randomly selected 14 prompts from the official research papers and blogs of Stable Diffusion 3 and Lumina, generating two images for each prompt: one using dense inference and the other using <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b>, both with the same random seed and default number of timesteps. As shown in Figure 4 (e), 633 out of 1400 votes (45.21%) indicated that the two images were of similar quality. Additionally, 28.29% of votes favored the dense image over the <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> result, while 26.50% preferred <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> over the dense result. These results demonstrate that <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> achieves a significant improvement in throughput (1.625× for Stable Diffusion 3 and 1.561× for Lumina-Next-T2I) without noticeably affecting human preference.
           </p>
         </div>
       </div>
@@ -295,10 +300,12 @@
           <h2 class="title is-4">Quantitive Results</h2>
           <div class="content has-text-centered">
             <img src="./static/images/exp_table.png" style="width: 95%;"><br>
+            <span style="font-size: 0.8em; width: 75%; display: inline-block;">Table 1: RAS provides Pareto improvements in throughput and image quality compared to rectified flow.
+            </span>
           </div>
           
           <p>
-            <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> consistently <b>pushes the efficiency frontier</b> for rectified-flow-based diffusion, significantly reducing inference time for each timestep while maintaining competitive image quality.  Compared to merely lowering the total number of timesteps, <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> yields slower quality degradation, especially when timesteps fall below 10. Moreover, in side-by-side comparisons on Stable Diffusion 3 and Lumina-Next-T2I, <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> frequently achieves a <b>Pareto improvement</b> in throughput and image quality: as is shown in Table 1, for a given speedup target, there almost always exists a <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> configuration that offers better FID, sFID, or CLIP score than the dense-inference baseline. As a result, <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> provides a broader parameter space to efficiently balance throughput, quality, and prompt compatibility for large-scale or latency-critical diffusion applications.
+            As is shown in figure 4 (c)(d), <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> consistently <b>pushes the efficiency frontier</b> for rectified-flow-based diffusion, significantly reducing inference time for each timestep while maintaining competitive image quality.  Compared to merely lowering the total number of timesteps, <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> yields slower quality degradation, especially when timesteps fall below 10. Moreover, in side-by-side comparisons on Stable Diffusion 3 and Lumina-Next-T2I, <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> frequently achieves a <b>Pareto improvement</b> in throughput and image quality: as is shown in Table 1, for a given speedup target, there almost always exists a <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> configuration that offers better FID, sFID, or CLIP score than the dense-inference baseline. As a result, <b><span style="color: #39c7c3;">R</span><span style="color: #7f51cf;">A</span><span style="color: #7f51cf;">S</span></b> provides a broader parameter space to efficiently balance throughput, quality, and prompt compatibility for large-scale or latency-critical diffusion applications.
           </p>
         </div>
       </div>
